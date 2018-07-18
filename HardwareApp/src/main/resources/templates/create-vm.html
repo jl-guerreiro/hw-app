@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Virtual Machine</title>
+        <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}" />
+        <meta charset="utf-8" />
+    </head>
+    <body>
+		<form class="form-container" th:object="${instance}" th:action="@{/createvm}" method="post">
+		<div class="form-title"><h2>Virtual Machine</h2></div>
+		<div class="form-title">Hostname</div>
+		<input class="form-field" type="text" name="hostname" th:field="*{hostname}"/><br />
+		<div class="form-title">CPU</div>
+		<input class="form-field" type="text" name="cpu" th:field="*{cpu}"/><br />
+		<div class="form-title">Memory</div>
+		<input class="form-field" type="text" name="memory" th:field="*{memory}"/><br />
+		<div class="form-title">Host Server</div>
+		<select class="form-field" th:field="*{bareMetal.id}">
+			<option value="0" text="Select:">Select:</option>
+			<option th:each="metal : ${combo}" th:value="${metal.getId()}" th:text="${metal.getHostname()}" 
+			th:selected="${instance.getBareMetal().getId()}"></option>
+		</select>
+		<input style="visibility: hidden;" type="text" name="id" th:field="*{id}"/>
+		<div class="submit-container">
+		<input class="submit-button" type="submit" value="Submit" />
+		</div>
+		</form>
+		<div class="critical" th:if="${not #lists.isEmpty(critical)}" th:text="${critical}"></div>
+		<div class="success" th:if="${not #lists.isEmpty(success)}" th:text="${success}"></div>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Virtual Machines List</title>
+        <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}" />
+        <link rel="stylesheet" href="../static/css/table.css" th:href="@{/css/table.css}" />
+        <meta charset="utf-8" />
+    </head>
+    <body>
+
+    <div>
+    	<h2>Virtual Machines List</h2>
+    	<h4><a href="/createvm">New Virtual Machine</a></h4>
+    </div>
+
+	<div th:if="${not #lists.isEmpty(objList)}">
+    	<table class="greyGridTable">
+    		<thead>
+    			<tr>
+    				<td>Hostname</td>
+    				<td>Total CPU</td>
+    				<td>Total Memory</td>
+                    <td>Host Server</td>
+    				<td>Edit</td>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<tr th:each="obj : ${objList}">
+    				<td th:text="${obj.getHostname()}">Hostname</td>
+    				<td th:text="${obj.getCpu()}">Total CPU</td>
+    				<td th:text="${obj.getMemory()}">Total Memory</td>
+                    <td th:text="${obj.getBareMetal().getHostname()}">Host Server</td>
+    				<td><a href="#">Edit</a></td>
+    			</tr>
+    		</tbody>
+    	</table>
+    </div>
+		
+    </body>
+</html>

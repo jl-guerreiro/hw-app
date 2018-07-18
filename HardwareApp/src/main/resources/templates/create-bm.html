@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Host Server</title>
+        <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}" />
+        <meta charset="utf-8" />
+    </head>
+    <body>
+		<form class="form-container" th:object="${instance}" th:action="@{/create}" method="post">
+		<div class="form-title"><h2>Host Server</h2></div>
+		<div class="form-title">Hostname</div>
+		<input class="form-field" type="text" name="hostname" th:field="*{hostname}"/><br />
+		<div class="form-title">CPU</div>
+		<input class="form-field" type="text" name="cpu" th:field="*{cpu}"/><br />
+		<div class="form-title">Memory</div>
+		<input class="form-field" type="text" name="memory" th:field="*{memory}"/><br />
+		<input style="visibility: hidden;" type="text" name="id" th:field="*{id}"/>
+		<div class="submit-container">
+		<input class="submit-button" type="submit" value="Submit" />
+		</div>
+		</form>
+		<div class="critical" th:if="${not #lists.isEmpty(critical)}" th:text="${critical}"></div>
+		<div class="success" th:if="${not #lists.isEmpty(success)}" th:text="${success}"></div>
+    </body>
+</html>
