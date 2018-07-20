@@ -3,9 +3,11 @@
     <head>
         <title>Host Server</title>
         <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}" />
+        <link rel="stylesheet" href="../static/css/table.css" th:href="@{/css/table.css}" />
         <meta charset="utf-8" />
     </head>
     <body>
+    	<div th:replace="header :: header"></div>
 		<form class="form-container" th:object="${instance}" th:action="@{/create}" method="post">
 		<div class="form-title"><h2>Host Server</h2></div>
 		<div class="form-title">Hostname</div>
@@ -19,7 +21,7 @@
 		<input class="submit-button" type="submit" value="Submit" />
 		</div>
 		</form>
-		<div class="critical" th:if="${not #lists.isEmpty(critical)}" th:text="${critical}"></div>
+		<div class="error" th:if="${not #lists.isEmpty(critical)}" th:text="${critical}"></div>
 		<div class="success" th:if="${not #lists.isEmpty(success)}" th:text="${success}"></div>
     </body>
 </html>

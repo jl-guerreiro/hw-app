@@ -2,14 +2,20 @@ package com.hwapp.servers.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hwapp.servers.component.BareMetalCalculator;
 import com.hwapp.servers.component.BareMetalTransporter;
 import com.hwapp.servers.model.BareMetal;
+import com.hwapp.servers.model.OperationModel;
 import com.hwapp.servers.repository.BareMetalRepository;
 
 @Controller
@@ -20,6 +26,9 @@ public class BareMetalController {
 	
 	@Autowired
 	BareMetalTransporter transporter;
+	
+	@Autowired
+	BareMetalCalculator calculator;
 	
 	@GetMapping("/list")
 	public ModelAndView listAll() {
@@ -35,11 +44,30 @@ public class BareMetalController {
 		return mav;
 	}
 	
+	@GetMapping("/create/{id}")
+	public ModelAndView edit(@PathVariable String id) {
+		ModelAndView mav = new ModelAndView("create-bm");
+		mav.addObject("instance", metalRepository.findById(id).get());
+		return mav;
+	}
+	
 	@PostMapping("/create")
-	public ModelAndView createOne(BareMetal metal, ModelAndView mav) {
-		metalRepository.save(metal);
-		mav.addObject("instance", metalRepository.findById(metal.getId()));
-		mav.addObject("success", "Created/Modified successfully");
+	public ModelAndView createOne(@Valid BareMetal metal, BindingResult brMetal, ModelAndView mav) {
+		OperationModel op = new OperationModel(brMetal);
+		if(op.isSucess()) {
+			if(metalRepository.existsById(metal.getId())) {
+				BareMetal existingMetal = metalRepository.findById(metal.getId()).get();
+				op = calculator.isResizePossible(existingMetal, metal);
+			}
+		}
+		if(op.isSucess()) {
+			metalRepository.save(metal);
+			mav.addObject("success", "Created/Modified successfully");
+			mav.addObject("instance", metalRepository.findById(metal.getId()));
+		}else {
+			mav.addObject("critical", op.getMessage());
+			mav.addObject("instance", metal);
+		}
 		mav.setViewName("create-bm");
 		return mav;
 	}

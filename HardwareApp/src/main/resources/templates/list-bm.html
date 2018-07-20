@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
     </head>
     <body>
+        <div th:replace="header :: header"></div>
 
     <div>
     	<h2>Host Servers List</h2>
@@ -14,15 +15,15 @@
     </div>
 
 	<div th:if="${not #lists.isEmpty(objList)}">
-    	<table class="greyGridTable">
+    	<table class="zui-table">
     		<thead>
     			<tr>
-    				<td>Hostname</td>
-    				<td>Total CPU</td>
-    				<td>Total Memory</td>
-    				<td>Free CPU</td>
-    				<td>Free Memory</td>
-    				<td>Edit</td>
+    				<th>Hostname</th>
+    				<th>Total CPU</th>
+    				<th>Total Memory</th>
+    				<th>Free CPU</th>
+    				<th>Free Memory</th>
+    				<th>Edit</th>
     			</tr>
     		</thead>
     		<tbody>
@@ -32,7 +33,7 @@
     				<td th:text="${obj.getMemory()}">Total Memory</td>
     				<td th:text="${obj.getActualCpu()}">Free CPU</td>
     				<td th:text="${obj.getActualMemory()}">Free Memory</td>
-    				<td><a href="#">Edit</a></td>
+    				<td><a href="#" th:href="${'/create/' + obj.getId()}">Edit</a></td>
     			</tr>
     		</tbody>
     	</table>

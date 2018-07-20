@@ -66,4 +66,8 @@ public class VirtualMachineCalculator {
 		return op;
 	}
 	
+	
+	
+	
+	
 }

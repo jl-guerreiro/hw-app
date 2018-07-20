@@ -4,6 +4,10 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class BareMetal {
@@ -11,9 +15,16 @@ public class BareMetal {
 	@Id
 	protected String id;
 	
+	@Size(min = 3)
+	@NotNull
 	protected String hostname;
 	
+	@DecimalMin("0.1")
+	@NotNull
 	protected Double cpu;
+	
+	@Min(1)
+	@NotNull
 	protected Integer memory;
 	
 	public BareMetal() {

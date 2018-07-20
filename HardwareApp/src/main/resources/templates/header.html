@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Header</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../static/css/table.css" th:href="@{/css/table.css}" />
+</head>
+<script type="text/javascript">
+	function doClick(){
+		return false;
+	}
+</script>
+<body>
+ <div class='headclazz' th:fragment="header">
+  <div class="headtitle"> <h3><i>::hardware app</i></h3> </div>
+  <table class='zui-table'>
+    <tbody>
+    <tr>
+      <td><a href="/list">Host Servers</a></td>
+      <td><a href="/listvm">Virtual Machines</a></td>
+    </tr>
+  </tbody>
+  </table>
+ </div>
+</body>
+</html>

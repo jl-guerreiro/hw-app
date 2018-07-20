@@ -1,8 +1,12 @@
 package com.hwapp.servers.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,10 +44,21 @@ public class VirtualMachineController {
 		return mav;
 	}
 	
+	@GetMapping("/createvm/{id}")
+	public ModelAndView edit(@PathVariable String id) {
+		ModelAndView mav = new ModelAndView("create-vm");
+		mav.addObject("instance", vmRepository.findById(id).get());
+		mav.addObject("combo", metalRepository.findAll());
+		return mav;
+	}
+	
 	@PostMapping("/createvm")
-	public ModelAndView createOne(VirtualMachine vm, ModelAndView mav) {
-		BareMetal metal = metalRepository.findById(vm.getBareMetal().getId()).orElse(vm.getBareMetal());
-		OperationModel op = calculator.doesItFit(metal, vm);
+	public ModelAndView createOne(@Valid VirtualMachine vm, BindingResult brVm, ModelAndView mav) {
+		OperationModel op = new OperationModel(brVm);
+		if(op.isSucess()) {
+			BareMetal metal = metalRepository.findById(vm.getBareMetal().getId()).orElse(vm.getBareMetal());
+			op = calculator.doesItFit(metal, vm);
+		}
 		if(op.isSucess()) {
 			vmRepository.save(vm);
 			mav.addObject("combo", metalRepository.findAll());
@@ -58,5 +73,4 @@ public class VirtualMachineController {
 		return mav;
 	}
 
-	
 }

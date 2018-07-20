@@ -3,9 +3,26 @@
     <head>
         <title>Menu</title>
         <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}" />
+        <link rel="stylesheet" href="../static/css/table.css" th:href="@{/css/table.css}" />
         <meta charset="utf-8" />
     </head>
     <body>
+        <div th:replace="header :: header"></div>
+        <table class='zui-table'>
+            <thead>
+                <tr>
+                    <th>MENU</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="/create">Create Host Server</a></td>
+                </tr>
+                <tr>
+                    <td><a href="/createvm">Create Virtual Machine</a></td>
+                </tr>
+            </tbody>
+        </table>
     	<a href="/list">List Host Servers</a>
     	<a href="/create">Create Host Server</a>
     	<a href="/listvm">List Virtual Machines</a>
