@@ -11,6 +11,13 @@ public class BareMetalDto extends BareMetal {
 	public BareMetalDto() {
 		
 	}
+	
+	public BareMetalDto(BareMetal metal) {
+		this.cpu = metal.getCpu();
+		this.hostname = metal.getHostname();
+		this.id = metal.getId();
+		this.memory = metal.getMemory();
+	}
 
 	public Double getActualCpu() {
 		return actualCpu;
